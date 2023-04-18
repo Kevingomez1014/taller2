@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Ventas</title>
+	<!-- Agregar los estilos de Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Ventas</h1>
+		<form>
+			<div class="form-group">
+				<label for="producto">Producto:</label>
+				<input type="text" class="form-control" id="producto">
+			</div>
+			<div class="form-group">
+				<label for="cantidad">Cantidad:</label>
+				<input type="number" class="form-control" id="cantidad">
+			</div>
+			<div class="form-group">
+				<label for="valor">Valor:</label>
+				<input type="number" class="form-control" id="valor">
+			</div>
+			<button type="button" class="btn btn-primary" onclick="agregarVenta()">Agregar venta</button>
+			<button type="button" class="btn btn-success" onclick="calcularTotal()">Calcular total</button>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Producto</th>
+					<th>Cantidad</th>
+					<th>Valor</th>
+				</tr>
+			</thead>
+			<tbody id="tablaVentas">
+			</tbody>
+		</table>
+		<div class="alert alert-success" role="alert" id="total"></div>
+	</div>
+	<!-- Agregar los scripts de Bootstrap y jQuery -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script>
+		// Declarar el arreglo para guardar los datos de venta
+		const ventas = [];
+
+		// Función para agregar los datos de venta al arreglo y mostrarlos en la tabla
+		function agregarVenta() {
+			const producto = document.getElementById('producto').value;
+			const cantidad = document.getElementById('cantidad').value;
+			const valor = document.getElementById('valor').value;
+			if (producto && cantidad && valor) {
+				ventas.push({producto, cantidad, valor});
+				mostrarVentas();
+				document.getElementById('producto').value = '';
+				document.getElementById('cantidad').value = '';
+				document.getElementById('valor').value = '';
+			}
+		}
+
+		// Función para recorrer el arreglo de ventas y mostrar los datos en la tabla
+		function mostrarVentas() {
+			const tablaVentas = document.getElementById('tablaVentas');
+			tablaVentas.innerHTML = '';
+			ventas.forEach(venta => {
+				const row = tablaVentas.insertRow();
+				const productoCell = row.insertCell();
+				const cantidadCell = row.insertCell();
+				const valorCell = row.insertCell();
+				productoCell.innerHTML = venta.producto;
+				cantidadCell.innerHTML = venta.cantidad;
+				valorCell.innerHTML = venta.valor;
+			});
+		}
+
+		// Función para calcular el valor total a pagar y mostrarlo en el div de total
+		function calcularTotal() {
+			let total = 0;
+			ventas.forEach

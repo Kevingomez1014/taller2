@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sistema de ventas</title>
+</head>
+<body>
+	<h1>Sistema de ventas</h1>
+	<form id="ventas-form">
+		<label for="producto-input">Producto:</label>
+		<input type="text" id="producto-input"><br>
+		<label for="cantidad-input">Cantidad:</label>
+		<input type="number" id="cantidad-input"><br>
+		<label for="precio-input">Precio:</label>
+		<input type="number" id="precio-input"><br>
+		<button type="button" onclick="agregarVenta()">Agregar venta</button>
+		<button type="button" onclick="mostrarVentas()">Mostrar ventas</button>
+		<p id="valor-a-pagar"></p>
+	</form>
+
+	<script>
+		let ventas = [];
+
+		function agregarVenta() {
+			let producto = document.getElementById("producto-input").value;
+			let cantidad = parseInt(document.getElementById("cantidad-input").value);
+			let precio = parseInt(document.getElementById("precio-input").value);
+
+			let venta = {
+				producto: producto,
+				cantidad: cantidad,
+				precio: precio
+			};
+
+			ventas.push(venta);
+
+			document.getElementById("ventas-form").reset();
+		}
+
+		function mostrarVentas() {
+			let total = 0;
+			let ventasHtml = "";
+
+			for (let i = 0; i < ventas.length; i++) {
+				let venta = ventas[i];
+
+				let subtotal = venta.cantidad * venta.precio;
+
+				ventasHtml += `${venta.producto} x ${venta.cantidad} = ${subtotal}<br>`;
+
+				total += subtotal;
+			}
+
+			document.getElementById("valor-a-pagar").innerHTML = `Valor a pagar: ${total}<br><br>Ventas:<br>${ventasHtml}`;
+		}
+	</script>
+</body>
+</html>

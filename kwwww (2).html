@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tienda electrónica</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h2>Tienda electrónica</h2>
+		<form>
+			<div class="form-group">
+				<label for="producto">Producto:</label>
+				<input type="text" class="form-control" id="producto">
+			</div>
+			<div class="form-group">
+				<label for="cantidad">Cantidad:</label>
+				<input type="number" class="form-control" id="cantidad">
+			</div>
+			<button type="button" class="btn btn-primary" onclick="agregarProducto()">Agregar producto</button>
+		</form>
+		<hr>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Producto</th>
+					<th>Cantidad</th>
+					<th>Valor</th>
+				</tr>
+			</thead>
+			<tbody id="tablaProductos">
+				
+			</tbody>
+		</table>
+		<hr>
+		<div class="form-group">
+			<label for="total">Total a pagar:</label>
+			<input type="text" class="form-control" id="total" readonly>
+		</div>
+		<button type="button" class="btn btn-success" onclick="calcularTotal()">Calcular total</button>
+	</div>
+	<script>
+		var productos = [];
+
+		function agregarProducto() {
+			var producto = $("#producto").val();
+			var cantidad = $("#cantidad").val();
+			productos.push({
+				producto: producto,
+				cantidad: cantidad
+			});
+			$("#tablaProductos").append("<tr><td>" + producto + "</td><td>" + cantidad + "</td><td></td></tr>");
+			$("#producto").val("");
+			$("#cantidad").val("");
+		}
+
+		function calcularTotal() {
+			var total = 0;
+			for (var i = 0; i < productos.length; i++) {
+				var valor = calcularValor(productos[i].producto, productos[i].cantidad);
+				total += valor;
+				$("#tablaProductos tr").eq(i + 1).find("td").eq(2).text(valor);
+			}
+			$("#total").val(total);
+		}
+
+		function calcularValor(producto, cantidad) {
+			
+			return cantidad * 1000;
+		}
+	</script>
+</body>
+</html>
